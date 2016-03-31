@@ -16,6 +16,7 @@ vector<string> &split(const string &s, char delim, vector<string> &elems)
     }
     return elems;
 }
+
 vector<string> split(const string &s, char delim) {
     vector<string> elems;
     split(s, delim, elems);
@@ -34,17 +35,21 @@ auto tokenize(const vector<string>& temp)
 	return move(v);
 }
 
-void create_cell_index(long tid,string line,map<string,vector<long>>& mp)
+void create_cell_index(long tid,string line,map<string,pair<int,vector<long>>>& mp)
 {
 	vector<string> col_index = split(line,',');
 	vector<string> cell_index = tokenize(col_index);
-	for(auto word : cell_index)
+	int i = 0;
+	for(auto word : col_index)
 	{
 
 		if(mp.find(word) != mp.end())
-			mp[word].push_back(tid);
+			mp[word].second.push_back(tid);
 		else
-			mp[word] = vector<long>({tid});
+			mp[word].second = vector<long>({tid});
+
+		mp[word].first = i;
+		++i;
 			
 	}
 }
@@ -55,7 +60,7 @@ long create_tup_index(long tid,long offset,int length,map<long,pair<long,int>>& 
 	return tid+1;
 }
 
-void disp1(const map<string, vector<long>>& mp)
+void disp1(const map<string, pair<int,vector<long>>>& mp)
 {
 	ofstream myfile;
   	myfile.open ("term_index.txt");
@@ -64,8 +69,8 @@ void disp1(const map<string, vector<long>>& mp)
 
   	for(auto key : mp)
 	{
-		myfile<<key.first<<" : {";
-		for(auto vl : key.second)
+		myfile<<key.first<<" : {"<<key.second.first<<"+  =>";
+		for(auto vl : key.second.second)
 			myfile<<vl<<",";
 		myfile<<" }\n";
 	}
@@ -92,7 +97,7 @@ int main()
   string line;
   long cur_pos,tid = 1,lm = 1;
   map<long,pair<long,int>> tup_index;
-  map<string,vector<long>> cell_index;
+  map<string,pair<int,vector<long>>> cell_index;
   ifstream myfile ("lamb.csv");
 
   while (lm)

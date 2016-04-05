@@ -1,14 +1,6 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <map>
-#include <string>
-#include <math.h>
-#include <algorithm>
-#include "index_v3.h"
+#include "index_data.h"
 using namespace std;
-#define k_box_size 3
+#define k_box_size 10
 
 class Idf_rank
 {
@@ -17,11 +9,30 @@ class Idf_rank
 	map<unsigned int,double> idf_calc;
 	unsigned int tot_tups;
 	vector<unsigned int> k_box;
+	map<string,double> k_box_tuples;
+	string data_file;
 
-	Idf_rank(Index i,unsigned int no)
+	//Default Ctor
+	Idf_rank(){};
+
+	Idf_rank(Index i,unsigned int no,string file)
 	{
 		index_obj = i;
 		tot_tups = no;
+		data_file = file;
+	}
+
+	//Copy Assignment
+	Idf_rank& operator=(const Idf_rank& rhs)
+	{
+		if(this != &rhs)
+		{
+			index_obj = rhs.index_obj;
+			idf_calc = rhs.idf_calc;
+			tot_tups = rhs.tot_tups;
+			k_box = rhs.k_box;
+		}
+		return *this;
 	}
 
 	void hash_terms(string query)
@@ -33,7 +44,8 @@ class Idf_rank
 		for(auto ele : split_words)
 		{
 			tups = index_obj.cell_index[ele];
-			calc_idf(tups,log(tot_tups/tups.size()));
+			if(tups.size() != 0)		//Handles zero occurence case
+				calc_idf(tups,log((double)tot_tups/(double)tups.size()));
 		}
 	}
 
@@ -88,7 +100,7 @@ class Idf_rank
 	{
 		k_box.clear();
 		double min = -1;
-		unsigned int min_tup;
+		unsigned int min_tup = 0;
 		for(auto counter : idf_calc)
 		{
 			
@@ -97,27 +109,28 @@ class Idf_rank
 
 			else
 			{
-				min_tup = min_box_element();
-				if(idf_calc[min_tup] < counter.second)
+				if(min_tup == 0)		//makes k_box creation faster for first time k_box gets filled
+					min_tup = min_box_element();
+
+				if(idf_calc[min_tup] < counter.second)		//Only searches for min_element when a new entry made in k_box
+				{
+					//cout<<"Replacing "<<min_tup<<" with "<<counter.first<<"\n";
+
 					replace(k_box.begin(), k_box.end(),min_tup,counter.first);
+					min_tup = min_box_element();
+				}
 			}
 
 		}
 	}
 
-	void display_tuples(string user_query)
+	void fetch_tuples(string user_query)
 	{
 		hash_terms(user_query);
 		create_box();
 
-		for(auto d : idf_calc)	//Value
-			cout<<d.first<<"->"<<d.second<<"\n";
-		cout<<"*******************************RESULTS************************************\n";
-
-		/*for(auto a : k_box)			//K_box
-			cout<<a<<"\t";*/
-		
-		ifstream file("lamb2.csv");
+		//Fetching and displaying tuples
+		ifstream file(data_file);
 		string full_tuple;
 		pair<unsigned int,int> seeking;
 		for(auto tup : k_box)
@@ -129,10 +142,35 @@ class Idf_rank
 		    		full_tuple.resize(seeking.second);
 		    		file.read(&full_tuple[0], seeking.second);
 			}
-			cout<<tup<<">"<<full_tuple<<"\n\n";
-		}
-		
 
+			k_box_tuples[full_tuple] = idf_calc[tup];
+
+			//Displaying tuples,scores and their tupleno
+			//cout<<tup<<"-> ("<<idf_calc[tup]<<") >>"<<full_tuple<<"\n\n";
+		}
+
+		disp_info();	
+		
+	}
+
+	void disp_info()
+	{
+		#if 0
+		cout<<"\n************************ Tupleno & IDF Scores ****************\n";
+		for(auto d : idf_calc)	// Tuple_no VS Scores
+			cout<<d.first<<"->"<<d.second<<"\n";
+		cout<<"************************************************************\n";
+
+		cout<<"\n********************** K_box : ******************************";
+		for(auto a : k_box)			// K_box(Top n tuples)
+			cout<<a<<"\t";
+		cout<<"\n";
+		#endif
+
+		cout<<"\n******************** After - IDF ******************************\n";
+		for(auto b : k_box_tuples)		//k_box tuples(Tuple VS Score)
+			cout<<b.first<<" +>>> "<<b.second<<"\n\n";
+		cout<<"************************************************************\n";
 	}
 	
 };

@@ -141,8 +141,8 @@ class Index
 			}
 		}
 	}
-
-	void tokenize(vector<string>& v, const string& line, const string& delim)
+	public:
+	 void tokenize(vector<string>& v, const string& line, const string& delim)
 	{
 		string final;
 		char prev;

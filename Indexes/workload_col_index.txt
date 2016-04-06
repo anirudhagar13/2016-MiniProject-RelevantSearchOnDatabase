@@ -1,6 +1,3 @@
-Column NO - -1 :
-	OUTLINER in { 37, }
-	
 Column NO - 3 :
 	2002 in { 5,17,21,36, }
 	2003 in { 1,6,20,23, }
@@ -45,6 +42,7 @@ Column NO - 6 :
 	HIGHLANDER in { 16, }
 	LANCER in { 11, }
 	MUSTANG in { 8,15,17, }
+	OUTLANDER in { 37, }
 	PIC in { 12,22, }
 	PICKUP in { 6,10,18,21,28, }
 	RAM in { 6,10,28, }

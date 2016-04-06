@@ -75,6 +75,8 @@ class Idf_rank
 					v.push_back(final);
 					final = "";
 				}
+				else
+					v.push_back("_E_M_P_T_Y_");
 			}
 		}
 		v.push_back(final);
@@ -167,10 +169,12 @@ class Idf_rank
 		cout<<"\n";
 		#endif
 
+		#if 0
 		cout<<"\n******************** After - IDF ******************************\n";
 		for(auto b : k_box_tuples)		//k_box tuples(Tuple VS Score)
 			cout<<b.first<<" +>>> "<<b.second<<"\n\n";
-		cout<<"************************************************************\n";
+		cout<<"*****************************************************************\n";
+		#endif
 	}
 	
 };

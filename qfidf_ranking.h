@@ -58,18 +58,22 @@ class Qfidf_rank
 	double tup_calc(string tuple)
 	{
 		vector<string> col;
-		double cumm_score(0.0);
+		double cumm_score(0.0),score(0.0);
 		tokenize(col,tuple,',');
 		int col_no = 1;
 		
 		//RQF/RQF calculation using Indexing
 		for(auto a : col)	//Exclude user queried columns
 		{
-			cumm_score += index_n_score(a,col_no);
+			score = index_n_score(a,col_no);
+			cumm_score += score;
 			++col_no;
+			//Printing each column and its QF Score obtained
+			//cout<<a<<"-"<<score<<" | ";
 		}	
 			
-		//cout<<"\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
+		//To Delimit k-box tuples
+		//cout<<"\n^^^^^^^^^^^^^^^^^^^^ "<<col.size()<<" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
 		return cumm_score;
 	}
 
@@ -110,6 +114,8 @@ class Qfidf_rank
 					v.push_back(final);
 					final = "";
 				}
+				else
+					v.push_back("_E_M_P_T_Y_");
 			}
 		}
 		v.push_back(final);
@@ -125,7 +131,7 @@ class Qfidf_rank
 		#endif
 
 		#if 1
-		cout<<"\n############# Final Relevancy Ranked Result ############\n";
+		cout<<"\n#################### Final Relevancy Ranked Result ##################\n\n";
 		//Printing in reverse order as map already arranged
 		map<double,string>::reverse_iterator rit(final_result.rbegin());
   		for (; rit!=final_result.rend(); ++rit)		//Final Arranged tie broken(Tuple VS NewScore)

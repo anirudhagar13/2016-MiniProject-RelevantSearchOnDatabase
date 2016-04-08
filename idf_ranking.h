@@ -11,6 +11,7 @@ class Idf_rank
 	vector<unsigned int> k_box;
 	map<string,double> k_box_tuples;
 	string data_file;
+	vector<int> xclude_column;
 
 	//Default Ctor
 	Idf_rank(){};
@@ -41,11 +42,21 @@ class Idf_rank
 		vector<string> split_words;
 		tokenize(split_words,query);
 
+		//Clearing all collections
+		xclude_column.clear();
+		k_box.clear();
+		idf_calc.clear();
+		k_box_tuples.clear();
+		//Collections cleared
+
 		for(auto ele : split_words)
 		{
 			tups = index_obj.cell_index[ele];
 			if(tups.size() != 0)		//Handles zero occurence case
 				calc_idf(tups,log((double)tot_tups/(double)tups.size()));
+
+			//user query columns xclusion
+			xclude_column.push_back(exclude_query_columns(ele));
 		}
 	}
 
@@ -100,7 +111,7 @@ class Idf_rank
 
 	void create_box()
 	{
-		k_box.clear();
+
 		double min = -1;
 		unsigned int min_tup = 0;
 		for(auto counter : idf_calc)
@@ -154,6 +165,38 @@ class Idf_rank
 		disp_info();	
 		
 	}
+
+	int exclude_query_columns(string value)
+{
+    stringstream linestream(value);
+    string new_value;
+
+    int freq = 0;
+    int max_freq = 0;
+    int max_freq_col = -1;
+    while(getline(linestream,new_value,' '))
+    {
+
+        for(auto e : index_obj.col_cell_index)
+        {
+
+            //cout<<"Trying to find = "<<new_value<<"\n";
+            if(e.second.find(new_value) != e.second.end())
+            {
+                freq = e.second[new_value].size();
+                //cout<<new_value<<"Found in col_cell_index @ COl no ="<< e.first<<"\n";
+            }
+
+            if(freq > max_freq)
+            {
+                max_freq = freq;
+                max_freq_col = e.first;
+            }
+            freq=0;
+        }
+    }
+    return max_freq_col;
+}
 
 	void disp_info()
 	{

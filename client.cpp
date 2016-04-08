@@ -24,19 +24,33 @@ int main()
 	#if 1
 	Idf_rank i1(index_gen,index_gen.total_size,data_file);	
 	string query;
+	string put_in_file;
+	//Appending user queries in workload
+	ofstream query_file;
+    query_file.open("Indexes/work2.csv",std::ios_base::app | std::ios_base::out);
 
 	while(true)
 	{
 		cout <<"Enter query to proceed `exit` to Quit Search\n";
 		getline(cin,query);
 		if(query == "exit")
+		{
 			break;
+			//Closing workload file
+			query_file.close();
+		}
 		else
+		{
 			i1.fetch_tuples(query);		//please enter query here
+			//Putting stuff in workload query file
+			put_in_file = query;
+			replace(put_in_file.begin(),put_in_file.end(), ' ', ',');
+			query_file<<put_in_file<<"\n";
+		}
 
 		//QF_IDF Ranking
 		#if 1
-		Qfidf_rank q1(i1.k_box_tuples,w1);
+		Qfidf_rank q1(i1.k_box_tuples,w1,i1.xclude_column);
 		q1.calc_max_fq();
 		q1.start_qfidf();
 		q1.disp_results();

@@ -1,4 +1,5 @@
 #include "workload.h"
+#include <ios>
 using namespace std;
 
 workload::workload(string rhs,Index index)
@@ -20,7 +21,6 @@ workload& workload::operator=(const workload& rhs)
             workload_col_index = rhs.workload_col_index;
             queries_filename = rhs.queries_filename;
             ind_obj = rhs.ind_obj;
-
 
         }
         return *this;
@@ -62,6 +62,7 @@ void workload::display_workload_column_index()
             }
             output_stream << "\n";
         }
+        output_stream.close();
     }
 
 void workload::insert_in_map(int col, string word, unsigned int tid)

@@ -8,11 +8,18 @@ class Qfidf_rank
 	map<double,string> final_result;
 	workload windex_obj;
 	map<int,unsigned int> max_freq;
+	vector<int> xclude_column;		//xclude user queries
 
-	Qfidf_rank(map<string,double> box,workload index)
+	Qfidf_rank(map<string,double> box,workload index,vector<int> xclude)
 	{
 		k_box_tuples = box;
 		windex_obj = index;
+		xclude_column = xclude;
+
+		//Clearing collections
+		final_result.clear();
+		max_freq.clear();
+		//Clearing finished
 	}
 
 	void start_qfidf()
@@ -65,7 +72,13 @@ class Qfidf_rank
 		//RQF/RQF calculation using Indexing
 		for(auto a : col)	//Exclude user queried columns
 		{
-			score = index_n_score(a,col_no);
+			//Xcluding columns already found in user query
+			if(find(xclude_column.begin(), xclude_column.end(), col_no) != xclude_column.end())
+				score = 0.0;
+			
+			else
+				score = index_n_score(a,col_no);
+
 			cumm_score += score;
 			++col_no;
 			//Printing each column and its QF Score obtained
@@ -124,7 +137,7 @@ class Qfidf_rank
 	void disp_results()
 	{
 		#if 0
-		cout<<"\n++++++++++++++++++TupleNo Vs QFScore+++++++++++++++++++\n";
+		cout<<"\n++++++++++++++++++ TupleNo Vs QFScore +++++++++++++++++++\n";
 		for(auto b : k_box_tuples)		//k_box tuples(Tuple VS NewScore)
 			cout<<b.first<<" +>>> "<<b.second<<"\n\n";
 		cout<<"************************************************************\n";

@@ -1,4 +1,5 @@
 #include "qfidf_ranking.h"
+#include <time.h>
 using namespace std;
 
 int main()
@@ -29,10 +30,16 @@ int main()
 	ofstream query_file;
     query_file.open("Indexes/work2.csv",std::ios_base::app | std::ios_base::out);
 
+	//timestamp code
+	clock_t t;
+	
+
 	while(true)
 	{
+		t = clock();
 		cout <<"Enter query to proceed `exit` to Quit Search\n";
 		getline(cin,query);
+		
 		if(query == "exit")
 		{
 			break;
@@ -55,6 +62,9 @@ int main()
 		q1.start_qfidf();
 		q1.disp_results();
 		#endif
+		
+		t = clock() - t;
+		printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
 	}
 	
 	#endif

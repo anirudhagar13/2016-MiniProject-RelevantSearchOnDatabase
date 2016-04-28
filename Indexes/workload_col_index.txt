@@ -1,15 +1,20 @@
+Column NO - -1 :
+	ASDFASD in { 47, }
+	BLACKBLACK in { 40, }
+	CHALLENGER in { 44, }
+	
 Column NO - 3 :
 	2002 in { 5,17,21,36, }
 	2003 in { 1,6,20,23, }
 	2004 in { 3,22,25, }
 	2006 in { 4,8,33, }
 	2007 in { 11,31, }
-	2008 in { 14,19,24,26,37, }
+	2008 in { 14,19,24,26,37,38,40, }
 	2009 in { 10,13,34, }
 	2010 in { 7,12,27,35, }
 	
 Column NO - 4 :
-	1 in { 6,7,8,9,12,21,22,24,30, }
+	1 in { 6,7,8,9,12,21,22,24,30,40, }
 	2 in { 20,28,31,34,35, }
 	3 in { 1,17,29,33, }
 	4 in { 25,36,37, }
@@ -21,10 +26,11 @@ Column NO - 5 :
 	ACURA in { 1,6,21, }
 	CADILLAC in { 2,36, }
 	CHEVROLET in { 28, }
-	DODGE in { 5,8,17,18,22, }
+	DODGE in { 5,8,17,18,22,43,44,45, }
 	FORD in { 12,15,23,29,30, }
-	HONDA in { 4,10,20,24,32,33, }
+	HONDA in { 4,10,20,24,32,33,40,46,48,51, }
 	HYUNDAI in { 19, }
+	JEEP in { 50, }
 	LINCOLN in { 16, }
 	MITSUBISHI in { 11,34,37, }
 	SUZUKI in { 3,13, }
@@ -33,39 +39,43 @@ Column NO - 5 :
 	VOLVO in { 7, }
 	
 Column NO - 6 :
-	ACCORD in { 4,20,24,32,33,35, }
+	ACCORD in { 4,20,24,32,33,35,38,40,46,48,49, }
 	AERIO in { 19,36, }
 	ASCENDER in { 23, }
 	AVIATOR in { 2, }
 	BEETLE in { 14,26, }
 	CAMRY in { 25,31, }
-	HIGHLANDER in { 16, }
+	HIGHLANDER in { 16,38, }
 	LANCER in { 11, }
 	MUSTANG in { 8,15,17, }
 	OUTLANDER in { 37, }
 	PIC in { 12,22, }
 	PICKUP in { 6,10,18,21,28, }
 	RAM in { 6,10,28, }
-	RUNNER in { 5,7,30, }
+	RUNNER in { 5,7,30,43, }
 	SIERRA in { 18,21, }
 	SILVERADO in { 12,22, }
+	STRATUS in { 45, }
 	TL in { 1, }
 	UPLANDER in { 3, }
 	VERONA in { 9, }
 	YUKON in { 34, }
 	
+Column NO - 8 :
+	SEDAN in { 46,48,50, }
+	
 Column NO - 9 :
 	BEIGE in { 4,6,32, }
-	BLACK in { 1,8,12,14,17,18,20,22,27,28,33,34,35, }
-	BLUE in { 3,16,29, }
+	BLACK in { 1,8,12,14,17,18,20,22,27,28,33,34,35,41,42,43,44,50, }
+	BLUE in { 3,16,29,38, }
 	BROWN in { 21, }
-	GOLD in { 2, }
+	GOLD in { 2,39, }
 	GREEN in { 36, }
 	GREY in { 19, }
 	MAROON in { 37, }
 	PINK in { 31, }
-	RED in { 11, }
-	WHITE in { 10,13,23,24,25,30, }
+	RED in { 11,51, }
+	WHITE in { 10,13,23,24,25,30,46,48, }
 	YELLOW in { 15,26, }
 	
 Column NO - 10 :

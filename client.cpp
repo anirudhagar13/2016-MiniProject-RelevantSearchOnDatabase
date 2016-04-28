@@ -2,10 +2,12 @@
 #include <time.h>
 using namespace std;
 
+#define MAX_BUF 1024
+
 int main()
 {
 	string data_file = "lamb3.csv";
-	string work_file = "work.csv";
+	string work_file = "work2.csv";
 
 	//DB Index Generation
 	Index index_gen(data_file);
@@ -23,23 +25,42 @@ int main()
 
 	//IDF Ranking
 	#if 1
-	Idf_rank i1(index_gen,index_gen.total_size,data_file);	
+	Idf_rank i1(index_gen,index_gen.total_size,data_file);
 	string query;
 	string put_in_file;
+
 	//Appending user queries in workload
 	ofstream query_file;
-    query_file.open("Indexes/work2.csv",std::ios_base::app | std::ios_base::out);
+    query_file.open("work2.csv",std::ios_base::app | std::ios_base::out);
 
 	//timestamp code
 	clock_t t;
-	
+
+	//Connecting with named pipe for cgi based UI
+	int fd,test = -1;
+    char * myfifo = "/usr/lib/cgi-bin/myfifo";
+    char buf[MAX_BUF];
+
 
 	while(true)
 	{
 		t = clock();
-		cout <<"Enter query to proceed `exit` to Quit Search\n";
-		getline(cin,query);
-		
+		//cout <<"Enter query to proceed `exit` to Quit Search\n";
+		//getline(cin,query);
+
+		//Connecting with named pipe for cgi based UI
+		while(test < 1)
+        {
+            fd = open(myfifo, O_RDONLY);
+            test = read(fd, buf, MAX_BUF);
+            buf[test] = '\0';
+            close(fd);
+        }
+        string query(buf);
+        test = -1;
+        //UI Code ends here
+        cout<<"RECEIVED = "<<query<<endl;
+
 		if(query == "exit")
 		{
 			break;
@@ -52,7 +73,7 @@ int main()
 			//Putting stuff in workload query file
 			put_in_file = query;
 			replace(put_in_file.begin(),put_in_file.end(), ' ', ',');
-			query_file<<put_in_file<<"\n";
+			query_file<<"\n"<<put_in_file;
 		}
 
 		//QF_IDF Ranking
@@ -62,11 +83,11 @@ int main()
 		q1.start_qfidf();
 		q1.disp_results();
 		#endif
-		
+
 		t = clock() - t;
 		printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
 	}
-	
+
 	#endif
 
 	/*QUERIES:

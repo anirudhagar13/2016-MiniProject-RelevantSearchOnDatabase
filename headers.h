@@ -6,3 +6,9 @@
 #include <string>
 #include <math.h>
 #include <algorithm>
+#include <fcntl.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <cstring>
+

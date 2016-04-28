@@ -11,7 +11,7 @@ workload::workload(string rhs,Index index)
 
 //Default ctor
 workload::workload(){};
-    
+
 //Copy Assignment
 workload& workload::operator=(const workload& rhs)
     {
@@ -31,15 +31,15 @@ void workload::get_data_file()
         ifstream input_file(queries_filename);
         string line,new_line;
         int col_num;
-        getline(input_file,line);
+        //getline(input_file,line);
         while(getline(input_file,line))
-        {       
+        {
             workload_tid += 1;
             stringstream linestream(line);
-            getline(linestream,new_line,',');
+            //getline(linestream,new_line,',');
             while(getline(linestream,new_line,','))
             {
-                new_line.erase(remove(new_line.begin(),new_line.end(),'"'),new_line.end());
+                //new_line.erase(remove(new_line.begin(),new_line.end(),'"'),new_line.end());
                 if(new_line != "")
                     col_num = workload::identify_column_insert_map(new_line, workload_tid);
             }

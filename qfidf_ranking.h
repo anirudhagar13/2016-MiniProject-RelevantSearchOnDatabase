@@ -28,7 +28,7 @@ class Qfidf_rank
 		for(auto e : k_box_tuples)
 		{
 			add_score = tup_calc(e.first);
-			k_box_tuples[e.first] += add_score; 
+			k_box_tuples[e.first] += add_score;
 
 		}
 
@@ -41,7 +41,7 @@ class Qfidf_rank
 
 	void calc_max_fq()
 	{
-		unsigned int max = 0; 
+		unsigned int max = 0;
 		for(auto a : windex_obj.workload_col_index)
 		{
 			for(auto b : a.second)
@@ -60,7 +60,7 @@ class Qfidf_rank
 		cout<<"************************************************************\n";
 		#endif
 	}
-	
+
 
 	double tup_calc(string tuple)
 	{
@@ -68,14 +68,14 @@ class Qfidf_rank
 		double cumm_score(0.0),score(0.0);
 		tokenize(col,tuple,',');
 		int col_no = 1;
-		
+
 		//RQF/RQF calculation using Indexing
 		for(auto a : col)	//Exclude user queried columns
 		{
 			//Xcluding columns already found in user query
 			if(find(xclude_column.begin(), xclude_column.end(), col_no) != xclude_column.end())
 				score = 0.0;
-			
+
 			else
 				score = index_n_score(a,col_no);
 
@@ -83,8 +83,8 @@ class Qfidf_rank
 			++col_no;
 			//Printing each column and its QF Score obtained
 			//cout<<a<<"-"<<score<<" | ";
-		}	
-			
+		}
+
 		//To Delimit k-box tuples
 		//cout<<"\n^^^^^^^^^^^^^^^^^^^^ "<<col.size()<<" ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n";
 		return cumm_score;
@@ -98,7 +98,7 @@ class Qfidf_rank
         unsigned int RQF(0);
 
         while(getline(value,new_value,' '))			//Actual Indexing each term of each column from workload col_cell_index
-        {    	
+        {
         	if(max_freq[column_no])
         	{
 	        	RQF = windex_obj.workload_col_index[column_no][new_value].size();
@@ -134,7 +134,7 @@ class Qfidf_rank
 		v.push_back(final);
 	}
 
-	void disp_results()
+	string disp_results()
 	{
 		#if 0
 		cout<<"\n++++++++++++++++++ TupleNo Vs QFScore +++++++++++++++++++\n";
@@ -144,13 +144,19 @@ class Qfidf_rank
 		#endif
 
 		#if 1
-		cout<<"\n#################### Final Relevancy Ranked Result ##################\n\n";
+		//cout<<"\n#################### Final Relevancy Ranked Result ##################\n\n";
 		//Printing in reverse order as map already arranged
+		string send_result = "";
 		map<double,string>::reverse_iterator rit(final_result.rbegin());
   		for (; rit!=final_result.rend(); ++rit)		//Final Arranged tie broken(Tuple VS NewScore)
-			cout<<rit->first<<" +>>> "<<rit->second<<"\n\n";
-		cout<<"************************************************************\n";
+  		{
+			//cout<<rit->first<<" +>>> "<<rit->second<<"\n\n";
+			send_result += to_string(rit->first) + " +>>> " + rit->second + "\n\n";
+  		}
+		//cout<<"************************************************************\n";
 		#endif
+
+		return send_result;
 	}
-	
+
 };

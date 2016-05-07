@@ -1,0 +1,19 @@
+#query
+{
+    width:500px;
+}
+
+#engine
+{
+    position: absolute;
+    left:400px;
+}
+#result_box
+{
+    display: none;
+    border-style: solid;
+    border-color: #0099ff;
+    width: 500px;
+    height: 300px;
+    overflow: scroll;
+}

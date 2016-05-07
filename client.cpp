@@ -58,6 +58,7 @@ int main()
         }
         string query(buf);
         test = -1;
+
         //UI Code ends here
         cout<<"RECEIVED = "<<query<<endl;
 
@@ -70,7 +71,8 @@ int main()
 		else
 		{
 			i1.fetch_tuples(query);		//please enter query here
-			//Putting stuff in workload query file
+
+			//Putting stuff in workload query file on condition
 			put_in_file = query;
 			replace(put_in_file.begin(),put_in_file.end(), ' ', ',');
 			query_file<<"\n"<<put_in_file;
@@ -81,20 +83,29 @@ int main()
 		Qfidf_rank q1(i1.k_box_tuples,w1,i1.xclude_column);
 		q1.calc_max_fq();
 		q1.start_qfidf();
-		q1.disp_results();
+        string sent_result = q1.disp_results();
 		#endif
+
+        char sent_res[10024];
+        strcpy(sent_res, sent_result.c_str());
+        sent_res[sent_result.size()] = '\0';
+
+        /* writing results back */
+        fd = open(myfifo,O_RDWR);
+        if(write(fd, sent_res, sent_result.size()+1)<0)
+            perror("Unable to write in pipe");
+
+        close(fd);
+        //results sent back
 
 		t = clock() - t;
 		printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
+
+        cout << "####### TUPLES SENT ##########\n\n";
+        cout<<sent_result;
+        cout << "##############################" <<endl;
 	}
 
 	#endif
-
-	/*QUERIES:
-	"JEEP GRAND CHEROKEE 12/2/2009"
-	2007 DODGE CHARGER V6 2.7L V6 M
-	7/8/2009 2006 3 CHEVROLET MALIBU 4C 2.2L I4 MP LT 4D SEDAN LT MAROON AUTO
-	2002 7 SATURN L SERIES L20 4D SEDAN L200 GOLD*/
-
 	return 0;
 }

@@ -10,6 +10,12 @@ function init()
 function hide()
 {
     box.style.display = "none";
+    bar.addEventListener("focus",show,false);
+}
+
+function show()
+{
+    box.style.display = "block";
 }
 
 function search(event)
@@ -23,7 +29,7 @@ function search(event)
         xhr = new XMLHttpRequest();
         xhr.onreadystatechange = processResults;
 
-        xhr.open("GET", "http://localhost/cgi-bin/client.cgi?query="+bar.value, true);
+        xhr.open("GET", "http://localhost/cgi-bin/client.cgi?query="+bar.value+"@", true);
         xhr.send();
 
     }
@@ -36,7 +42,10 @@ function drop_box()
 
 function processResults(event)
 {
-    // will fire four times at max
+    // closes window on exit
+    if(bar.value == "exit")
+        window.close();
+
     if(xhr.readyState == 4 && xhr.status == 200)
     {
         // Read the data send by the server
@@ -45,6 +54,7 @@ function processResults(event)
         drop_tuples = drop_box();
 
         //Adding tuples dynamically to box
+        box.innerHTML = '';
         for(i in drop_tuples)
         {
             ln = document.createElement('a');

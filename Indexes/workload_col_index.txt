@@ -28,7 +28,7 @@ Column NO - 5 :
 	CHEVROLET in { 28, }
 	DODGE in { 5,8,17,18,22,43,44,45, }
 	FORD in { 12,15,23,29,30, }
-	HONDA in { 4,10,20,24,32,33,40,46,48,51, }
+	HONDA in { 4,10,20,24,32,33,40,46,48,51,58,59, }
 	HYUNDAI in { 19, }
 	JEEP in { 50,52,53, }
 	LINCOLN in { 16, }
@@ -63,12 +63,12 @@ Column NO - 6 :
 	
 Column NO - 8 :
 	HATCHBACK in { 53, }
-	SEDAN in { 46,48,50,52, }
+	SEDAN in { 46,48,50,52,55,56,59, }
 	
 Column NO - 9 :
 	BEIGE in { 4,6,32, }
 	BLACK in { 1,8,12,14,17,18,20,22,27,28,33,34,35,41,42,43,44,50,52,53, }
-	BLUE in { 3,16,29,38, }
+	BLUE in { 3,16,29,38,54,55,56,57,58,59, }
 	BROWN in { 21, }
 	GOLD in { 2,39, }
 	GREEN in { 36, }

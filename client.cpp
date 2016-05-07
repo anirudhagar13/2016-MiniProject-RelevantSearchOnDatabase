@@ -4,6 +4,9 @@ using namespace std;
 
 #define MAX_BUF 1024
 
+bool process_query(string&,bool);
+void add_to_workload(string);
+
 int main()
 {
 	string data_file = "lamb3.csv";
@@ -28,10 +31,6 @@ int main()
 	Idf_rank i1(index_gen,index_gen.total_size,data_file);
 	string query;
 	string put_in_file;
-
-	//Appending user queries in workload
-	ofstream query_file;
-    query_file.open("work2.csv",std::ios_base::app | std::ios_base::out);
 
 	//timestamp code
 	clock_t t;
@@ -62,20 +61,23 @@ int main()
         //UI Code ends here
         cout<<"RECEIVED = "<<query<<endl;
 
-		if(query == "exit")
+		if(query == "exit" || query == "exit@")
 		{
 			break;
-			//Closing workload file
-			query_file.close();
 		}
 		else
 		{
+            bool set_var_addwork = false;
+            set_var_addwork = process_query(query,set_var_addwork);
+
+            cout<<"After Processing = "<<query<<endl;
+
 			i1.fetch_tuples(query);		//please enter query here
 
 			//Putting stuff in workload query file on condition
-			put_in_file = query;
-			replace(put_in_file.begin(),put_in_file.end(), ' ', ',');
-			query_file<<"\n"<<put_in_file;
+            if(set_var_addwork)
+                add_to_workload(query);
+
 		}
 
 		//QF_IDF Ranking
@@ -108,4 +110,38 @@ int main()
 
 	#endif
 	return 0;
+}
+
+void add_to_workload(string put_in_file)
+{
+
+    //Appending user queries in workload
+    ofstream query_file;
+    query_file.open("work2.csv",std::ios_base::app | std::ios_base::out);
+
+    replace(put_in_file.begin(),put_in_file.end(), ' ', ',');
+    query_file<<"\n"<<put_in_file;
+
+    //Closing workload file
+    query_file.close();
+}
+
+bool process_query(string& query,bool set_var_addwork)
+{
+    //Searching for query to be added to workload
+    auto found = find(query.begin(),query.end(),'@');
+
+    if(found != query.end())
+    {
+        set_var_addwork = true;
+        query.erase(found,found+1);
+    }
+
+    for(auto& x: query)
+    {
+        //Capitalizing Characters
+        x = toupper(x);
+    }
+
+    return set_var_addwork;
 }

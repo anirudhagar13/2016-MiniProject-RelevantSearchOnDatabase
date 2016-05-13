@@ -51,7 +51,7 @@ int main()
     map<string,string> Get;
     initializeGet(Get); //notice that the variable is passed by reference!
     cout<<"Content-type: text/html"<<endl<<endl;
-    cout<<"<html><body>"<<endl;
+    //cout<<"<html><body>"<<endl;
     string topic;
     if (Get.find("query")!=Get.end())
     {
@@ -68,6 +68,6 @@ int main()
     {
         cout<<"Enter Query And press Search"<<endl;
     }
-    cout<<"</body></html>"<<endl;
+    //cout<<"</body></html>"<<endl;
     return 0;
 }

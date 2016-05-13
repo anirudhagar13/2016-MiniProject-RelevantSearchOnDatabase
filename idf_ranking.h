@@ -231,37 +231,45 @@ class Idf_rank
 		cout<<"************************************************************\n";
 		#endif
 
-		#if 1
+
 		//cout<<"\n#################### Final Relevancy Ranked Result ##################\n\n";
 		//Printing in reverse order as map already arranged
 
 		string send_result = "";
-		map<double,string> sorted_k_box_tuples;
+		map<double,vector<string>> sorted_k_box_tuples;
 		for(auto e : k_box_tuples)
 		{		
 			//sorted_k_box_tuples[e.second] = e.first;	
 			//sorted_k_box_tuples.insert(pair<double,string>(e.second,e.first));
 			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
-			sorted_k_box_tuples[e.second] = e.first;
+			
+			//sorted_k_box_tuples[e.second] = e.first;
+			if(sorted_k_box_tuples.find(e.second) == sorted_k_box_tuples.end()) // new score
+			{
+				sorted_k_box_tuples[e.second] = vector<string>({e.first}); //new word - // make col and word
+			}
+			else // old score
+			{
+				sorted_k_box_tuples[e.second].push_back(e.first);
+			}
+		}
+		for (map<double, vector<string>>::reverse_iterator iter = sorted_k_box_tuples.rbegin(); iter != sorted_k_box_tuples.rend(); ++iter)
+		{
+    		for( auto vec_iter = iter->second.cbegin() ; vec_iter != iter->second.cend() ; ++vec_iter )
+				send_result += to_string(iter->first) + " +>>> " + *vec_iter + "\n\n";                
+				//std::cout << *vec_iter << "  " ;
 		}	
+		#if 0
 		for(auto e : sorted_k_box_tuples)
 		{		
 			//sorted_k_box_tuples[e.second] = e.first;	
-			send_result += to_string(e.first) + " +>>> " + e.second + "\n\n";
+			for(auto k : e.second)
+				send_result += to_string(e.first) + " +>>> " + k + "\n\n";
 			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
 		}	
 		cout<<"************************************************************\n";
 		cout << "send_result = " << send_result << endl;		
 		cout<<"************************************************************\n";
-		#if 0		
-		map<string,double>::reverse_iterator rit(k_box_tuples.rbegin());
-  		for (; rit!=k_box_tuples.rend(); ++rit)		//Final Arranged tie broken(Tuple VS NewScore)
-  		{
-			//cout<<rit->first<<" +>>> "<<rit->second<<"\n\n";
-			send_result += to_string(rit->second) + " +>>> " + rit->first + "\n\n";
-  		}
-		#endif
-		//cout<<"************************************************************\n";
 		#endif
 		return send_result;
 	}

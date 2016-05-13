@@ -7,6 +7,17 @@ function init()
 
 }
 
+function redirect()
+{
+    localStorage.setItem('fetch_time',fetch_time);
+    localStorage.setItem('k_box_size',k_box_size);
+    localStorage.setItem('total_size',total_size);
+    localStorage['tuple_id'] = JSON.stringify(tuple_id);
+    localStorage['tuple'] = JSON.stringify(tuple);
+    localStorage['tuple_score'] = JSON.stringify(tuple_score);
+    window.open("stats.html");
+}
+
 function hide()
 {
     box.style.display = "none";

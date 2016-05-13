@@ -9,14 +9,12 @@
 </head>
 <body onload="init()">
 <div id="engine">
-<form action="/cgi-bin/client.cgi" method="get">
 <center><img src="engine.jpg" class="w3-circle" alt="SEARCH"></center>
-<input type="text" class = "w3-input w3-text-blue" name="query" id="query" placeholder="Enter your query here">
+<input type="text" autocomplete="off" class = "w3-input w3-text-blue" name="query" id="query" placeholder="Enter your query here">
 <div id="result_box" class="w3-dropdown-content w3-border w3-card-4">
 </div>
 <br/><br/>
-<center><input class="w3-btn w3-xxlarge w3-round-xxlarge w3-light-blue w3-hover-teal" type="submit" id="search" value="DB Search" /></center>
-</form>
+<center><input class="w3-btn w3-xxlarge w3-round-xxlarge w3-light-blue w3-hover-teal" type="button" onclick="redirect()" id="search" value="DB Search" /></center>
 </div>
 </body>
 </html>

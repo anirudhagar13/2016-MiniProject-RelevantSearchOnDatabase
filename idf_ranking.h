@@ -68,7 +68,7 @@ class Idf_rank
 				idf_calc[a] += score;
 			else
 				idf_calc[a] = score;
-		}	
+		}
 
 	}
 
@@ -116,7 +116,7 @@ class Idf_rank
 		unsigned int min_tup = 0;
 		for(auto counter : idf_calc)
 		{
-			
+
 			if(k_box.size() < k_box_size)
 				k_box.push_back(counter.first);
 
@@ -154,6 +154,10 @@ class Idf_rank
 		    		file.seekg(seeking.first);
 		    		full_tuple.resize(seeking.second);
 		    		file.read(&full_tuple[0], seeking.second);
+
+		    		//Attaching tuple-id to tuple for stat presentation
+
+		    		full_tuple += "*&^" + to_string(tup);
 			}
 
 			k_box_tuples[full_tuple] = idf_calc[tup];
@@ -162,8 +166,8 @@ class Idf_rank
 			//cout<<tup<<"-> ("<<idf_calc[tup]<<") >>"<<full_tuple<<"\n\n";
 		}
 
-		disp_info();	
-		
+		disp_info();
+
 	}
 
 	int exclude_query_columns(string value)
@@ -219,5 +223,5 @@ class Idf_rank
 		cout<<"*****************************************************************\n";
 		#endif
 	}
-	
+
 };

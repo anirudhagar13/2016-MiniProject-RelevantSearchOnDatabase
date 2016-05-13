@@ -1,4 +1,5 @@
 Column NO - -1 :
+	ALLOY in { 56, }
 	ASDFASD in { 47, }
 	BLACKBLACK in { 40, }
 	CHALLENGER in { 44, }
@@ -28,9 +29,9 @@ Column NO - 5 :
 	CHEVROLET in { 28, }
 	DODGE in { 5,8,17,18,22,43,44,45, }
 	FORD in { 12,15,23,29,30, }
-	HONDA in { 4,10,20,24,32,33,40,46,48,51,58,59, }
+	HONDA in { 4,10,20,24,32,33,40,46,48,51, }
 	HYUNDAI in { 19, }
-	JEEP in { 50,52,53, }
+	JEEP in { 50,52,53,59, }
 	LINCOLN in { 16, }
 	MITSUBISHI in { 11,34,37, }
 	SUZUKI in { 3,13, }
@@ -63,19 +64,19 @@ Column NO - 6 :
 	
 Column NO - 8 :
 	HATCHBACK in { 53, }
-	SEDAN in { 46,48,50,52,55,56,59, }
+	SEDAN in { 46,48,50,52, }
 	
 Column NO - 9 :
 	BEIGE in { 4,6,32, }
-	BLACK in { 1,8,12,14,17,18,20,22,27,28,33,34,35,41,42,43,44,50,52,53, }
-	BLUE in { 3,16,29,38,54,55,56,57,58,59, }
+	BLACK in { 1,8,12,14,17,18,20,22,27,28,33,34,35,41,42,43,44,50,52,53,57,58,59, }
+	BLUE in { 3,16,29,38, }
 	BROWN in { 21, }
 	GOLD in { 2,39, }
 	GREEN in { 36, }
 	GREY in { 19, }
 	MAROON in { 37, }
 	PINK in { 31, }
-	RED in { 11,51, }
+	RED in { 11,51,54,55,56, }
 	WHITE in { 10,13,23,24,25,30,46,48, }
 	YELLOW in { 15,26, }
 	
@@ -89,7 +90,7 @@ Column NO - 11 :
 	Special in { 7,11,14,18,22,30,34,37, }
 	
 Column NO - 12 :
-	AMERICAN in { 1,2,5,6,8,10,12,15,16,23,26,31,35, }
+	AMERICAN in { 1,2,5,6,8,10,12,15,16,23,26,31,35,55,56, }
 	ASIAN in { 4,7,11,14,18,19,20,22,25,33,34,36,37, }
 	LINE in { 7,11,14,18,19,20,22,25,33,34,37, }
 	OTHER in { 3,4,17,21,27,36, }

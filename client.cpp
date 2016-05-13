@@ -11,6 +11,7 @@ int main()
 {
 	string data_file = "lamb3.csv";
 	string work_file = "work2.csv";
+    string total_tuples = "";
 
 	//DB Index Generation
 	Index index_gen(data_file);
@@ -31,6 +32,10 @@ int main()
 	Idf_rank i1(index_gen,index_gen.total_size,data_file);
 	string query;
 	string put_in_file;
+
+    //Attaching total tuples for client statistics
+    total_tuples = to_string(i1.tot_tups);
+
 
 	//timestamp code
 	clock_t t;
@@ -88,6 +93,18 @@ int main()
         string sent_result = q1.disp_results();
 		#endif
 
+        //Fetching Time
+        t = clock() - t;
+        printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
+
+        //Attaching other statistics info to be displayed on client table
+
+        sent_result += "!#" + total_tuples
+                    + "$#" + to_string(k_box_size)
+                    + "^#" + to_string(t);
+
+        //Attachment complete
+
         char sent_res[10024];
         strcpy(sent_res, sent_result.c_str());
         sent_res[sent_result.size()] = '\0';
@@ -99,9 +116,6 @@ int main()
 
         close(fd);
         //results sent back
-
-		t = clock() - t;
-		printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
 
         cout << "####### TUPLES SENT ##########\n\n";
         cout<<sent_result;

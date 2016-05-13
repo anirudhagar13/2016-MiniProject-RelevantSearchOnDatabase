@@ -10,7 +10,7 @@ void add_to_workload(string);
 int main()
 {
 	string data_file = "lamb3.csv";
-	string work_file = "work2.csv";
+	string work_file = "work4.csv";
     string total_tuples = "";
 
 	//DB Index Generation
@@ -23,7 +23,9 @@ int main()
 
 	//Workload Index Generation
 	workload w1(work_file,index_gen);
-	w1.get_data_file();
+	int num_of_queries_made = w1.get_data_file(); // 
+	cout << "@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+	cout << "num_of_queries_made = " << num_of_queries_made << endl;
 	w1.display_workload_column_index();
 	cout<<"***************************WORKLOAD INDEXING DONE****************************\n";
 
@@ -48,7 +50,7 @@ int main()
 
 	while(true)
 	{
-		t = clock();
+		//t = clock();
 		//cout <<"Enter query to proceed `exit` to Quit Search\n";
 		//getline(cin,query);
 
@@ -65,7 +67,8 @@ int main()
 
         //UI Code ends here
         cout<<"RECEIVED = "<<query<<endl;
-
+		//start timer		
+		t = clock();
 		if(query == "exit" || query == "exit@")
 		{
 			break;
@@ -84,25 +87,39 @@ int main()
                 add_to_workload(query);
 
 		}
+		
+		//perform qf-idf only when workload is some large enough value, if cond->true
+		//update string sent_result via qf-idf
+		string sent_result;
+		if(num_of_queries_made > 10)
+		{
+			//QF_IDF Ranking
+			#if 1
+			Qfidf_rank q1(i1.k_box_tuples,w1,i1.xclude_column);
+			q1.calc_max_fq();
+			q1.start_qfidf();
+		    sent_result = q1.disp_results();
+			#endif
 
-		//QF_IDF Ranking
+		    //Fetching Time
+		    t = clock() - t;
+		    printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
+		}
 		#if 1
-		Qfidf_rank q1(i1.k_box_tuples,w1,i1.xclude_column);
-		q1.calc_max_fq();
-		q1.start_qfidf();
-        string sent_result = q1.disp_results();
+		else
+		{
+			sent_result = i1.disp_results();
+			
+			//Fetching Time
+		    t = clock() - t;
+		    printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
+		}
 		#endif
-
-        //Fetching Time
-        t = clock() - t;
-        printf("%f seconds\n",((float)t)/CLOCKS_PER_SEC);
-
         //Attaching other statistics info to be displayed on client table
 
         sent_result += "!#" + total_tuples
                     + "$#" + to_string(k_box_size)
                     + "^#" + to_string(t);
-
         //Attachment complete
 
         char sent_res[10024];

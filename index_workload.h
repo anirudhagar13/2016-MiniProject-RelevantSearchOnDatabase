@@ -26,7 +26,7 @@ workload& workload::operator=(const workload& rhs)
         return *this;
     }
 
-void workload::get_data_file()
+int workload::get_data_file()
 {
         ifstream input_file(queries_filename);
         string line,new_line;
@@ -44,6 +44,7 @@ void workload::get_data_file()
                     col_num = workload::identify_column_insert_map(new_line, workload_tid);
             }
         }
+		return workload_tid;
 }
 void workload::display_workload_column_index()
     {

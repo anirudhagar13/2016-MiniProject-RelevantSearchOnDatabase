@@ -18,7 +18,7 @@ class workload
     workload(string,Index);
     workload& operator=(const workload& rhs);
     void display_workload_column_index();
-    void get_data_file();
+    int get_data_file();
     void insert_in_map(int , string , unsigned int );
     int identify_column_insert_map(string, int);
 };

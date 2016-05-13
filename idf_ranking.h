@@ -111,12 +111,10 @@ class Idf_rank
 
 	void create_box()
 	{
-
 		double min = -1;
 		unsigned int min_tup = 0;
 		for(auto counter : idf_calc)
 		{
-
 			if(k_box.size() < k_box_size)
 				k_box.push_back(counter.first);
 
@@ -171,36 +169,36 @@ class Idf_rank
 	}
 
 	int exclude_query_columns(string value)
-{
-    stringstream linestream(value);
-    string new_value;
+	{
+		stringstream linestream(value);
+		string new_value;
 
-    int freq = 0;
-    int max_freq = 0;
-    int max_freq_col = -1;
-    while(getline(linestream,new_value,' '))
-    {
+		int freq = 0;
+		int max_freq = 0;
+		int max_freq_col = -1;
+		while(getline(linestream,new_value,' '))
+		{
 
-        for(auto e : index_obj.col_cell_index)
-        {
+		    for(auto e : index_obj.col_cell_index)
+		    {
 
-            //cout<<"Trying to find = "<<new_value<<"\n";
-            if(e.second.find(new_value) != e.second.end())
-            {
-                freq = e.second[new_value].size();
-                //cout<<new_value<<"Found in col_cell_index @ COl no ="<< e.first<<"\n";
-            }
+		        //cout<<"Trying to find = "<<new_value<<"\n";
+		        if(e.second.find(new_value) != e.second.end())
+		        {
+		            freq = e.second[new_value].size();
+		            //cout<<new_value<<"Found in col_cell_index @ COl no ="<< e.first<<"\n";
+		        }
 
-            if(freq > max_freq)
-            {
-                max_freq = freq;
-                max_freq_col = e.first;
-            }
-            freq=0;
-        }
-    }
-    return max_freq_col;
-}
+		        if(freq > max_freq)
+		        {
+		            max_freq = freq;
+		            max_freq_col = e.first;
+		        }
+		        freq=0;
+		    }
+		}
+    	return max_freq_col;
+	}
 
 	void disp_info()
 	{
@@ -223,5 +221,49 @@ class Idf_rank
 		cout<<"*****************************************************************\n";
 		#endif
 	}
+#if 1
+	string disp_results()
+	{
+		#if 0
+		cout<<"\n++++++++++++++++++ TupleNo Vs QFScore +++++++++++++++++++\n";
+		for(auto b : k_box_tuples)		//k_box tuples(Tuple VS NewScore)
+			cout<<b.first<<" +>>> "<<b.second<<"\n\n";
+		cout<<"************************************************************\n";
+		#endif
 
+		#if 1
+		//cout<<"\n#################### Final Relevancy Ranked Result ##################\n\n";
+		//Printing in reverse order as map already arranged
+
+		string send_result = "";
+		map<double,string> sorted_k_box_tuples;
+		for(auto e : k_box_tuples)
+		{		
+			//sorted_k_box_tuples[e.second] = e.first;	
+			//sorted_k_box_tuples.insert(pair<double,string>(e.second,e.first));
+			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
+			sorted_k_box_tuples[e.second] = e.first;
+		}	
+		for(auto e : sorted_k_box_tuples)
+		{		
+			//sorted_k_box_tuples[e.second] = e.first;	
+			send_result += to_string(e.first) + "+>>>" + e.second << "\n\n";
+			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
+		}	
+		cout<<"************************************************************\n";
+		cout << "send_result = " << send_result << endl;		
+		cout<<"************************************************************\n";
+		#if 0		
+		map<string,double>::reverse_iterator rit(k_box_tuples.rbegin());
+  		for (; rit!=k_box_tuples.rend(); ++rit)		//Final Arranged tie broken(Tuple VS NewScore)
+  		{
+			//cout<<rit->first<<" +>>> "<<rit->second<<"\n\n";
+			send_result += to_string(rit->second) + " +>>> " + rit->first + "\n\n";
+  		}
+		#endif
+		//cout<<"************************************************************\n";
+		#endif
+		return send_result;
+	}
+#endif
 };

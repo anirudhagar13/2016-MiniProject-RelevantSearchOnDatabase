@@ -10,7 +10,7 @@ void add_to_workload(string);
 int main()
 {
 	string data_file = "lamb3.csv";
-	string work_file = "work4.csv";
+	string work_file = "work2.csv";
     string total_tuples = "";
 
 	//DB Index Generation
@@ -44,8 +44,7 @@ int main()
 
 	//Connecting with named pipe for cgi based UI
 	int fd,test = -1;
-    char * myfifo = "/usr/lib/cgi-bin/myfifo";
-	//char myfifo[] = "/usr/lib/cgi-bin/myfifo";
+	char myfifo[] = "/usr/lib/cgi-bin/myfifo";
     char buf[MAX_BUF];
 
 

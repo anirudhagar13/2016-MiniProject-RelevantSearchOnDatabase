@@ -247,7 +247,7 @@ class Idf_rank
 		for(auto e : sorted_k_box_tuples)
 		{		
 			//sorted_k_box_tuples[e.second] = e.first;	
-			send_result += to_string(e.first) + "+>>>" + e.second << "\n\n";
+			send_result += to_string(e.first) + " +>>> " + e.second + "\n\n";
 			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
 		}	
 		cout<<"************************************************************\n";

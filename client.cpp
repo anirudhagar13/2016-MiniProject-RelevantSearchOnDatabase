@@ -45,6 +45,7 @@ int main()
 	//Connecting with named pipe for cgi based UI
 	int fd,test = -1;
     char * myfifo = "/usr/lib/cgi-bin/myfifo";
+	//char myfifo[] = "/usr/lib/cgi-bin/myfifo";
     char buf[MAX_BUF];
 
 

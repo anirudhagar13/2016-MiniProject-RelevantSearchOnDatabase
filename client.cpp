@@ -5,12 +5,16 @@ using namespace std;
 #define MAX_BUF 1024
 
 bool process_query(string&,bool);
-void add_to_workload(string);
+void add_to_workload(string,string);
 
 int main()
 {
-	string data_file = "lamb3.csv";
-	string work_file = "work2.csv";
+	string data_file = "Sacramentorealestate.csv";
+	//lamb3.csv
+	//Sacramentorealestate.csv
+	string work_file = "Sacramentorealestate_workload.csv";
+	//lamb3_workload.csv
+	//Sacramentorealestate_workload.csv
     string total_tuples = "";
 
 	//DB Index Generation
@@ -84,7 +88,7 @@ int main()
 
 			//Putting stuff in workload query file on condition
             if(set_var_addwork)
-                add_to_workload(query);
+            	add_to_workload(work_file,query);
 
 		}
 		
@@ -143,12 +147,12 @@ int main()
 	return 0;
 }
 
-void add_to_workload(string put_in_file)
+void add_to_workload(string workload_file, string put_in_file)
 {
 
     //Appending user queries in workload
     ofstream query_file;
-    query_file.open("work2.csv",std::ios_base::app | std::ios_base::out);
+    query_file.open(workload_file,std::ios_base::app | std::ios_base::out);
 
     replace(put_in_file.begin(),put_in_file.end(), ' ', ',');
     query_file<<"\n"<<put_in_file;

@@ -1,6 +1,6 @@
 #include "index_data.h"
 using namespace std;
-#define k_box_size 10
+#define k_box_size 30
 
 class Idf_rank
 {
@@ -224,26 +224,10 @@ class Idf_rank
 #if 1
 	string disp_results()
 	{
-		#if 0
-		cout<<"\n++++++++++++++++++ TupleNo Vs QFScore +++++++++++++++++++\n";
-		for(auto b : k_box_tuples)		//k_box tuples(Tuple VS NewScore)
-			cout<<b.first<<" +>>> "<<b.second<<"\n\n";
-		cout<<"************************************************************\n";
-		#endif
-
-
-		//cout<<"\n#################### Final Relevancy Ranked Result ##################\n\n";
-		//Printing in reverse order as map already arranged
-
 		string send_result = "";
 		map<double,vector<string>> sorted_k_box_tuples;
 		for(auto e : k_box_tuples)
 		{		
-			//sorted_k_box_tuples[e.second] = e.first;	
-			//sorted_k_box_tuples.insert(pair<double,string>(e.second,e.first));
-			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
-			
-			//sorted_k_box_tuples[e.second] = e.first;
 			if(sorted_k_box_tuples.find(e.second) == sorted_k_box_tuples.end()) // new score
 			{
 				sorted_k_box_tuples[e.second] = vector<string>({e.first}); //new word - // make col and word
@@ -259,18 +243,6 @@ class Idf_rank
 				send_result += to_string(iter->first) + " +>>> " + *vec_iter + "\n\n";                
 				//std::cout << *vec_iter << "  " ;
 		}	
-		#if 0
-		for(auto e : sorted_k_box_tuples)
-		{		
-			//sorted_k_box_tuples[e.second] = e.first;	
-			for(auto k : e.second)
-				send_result += to_string(e.first) + " +>>> " + k + "\n\n";
-			//send_result += to_string(e.second) + "+>>>" + e.first + "\n\n";
-		}	
-		cout<<"************************************************************\n";
-		cout << "send_result = " << send_result << endl;		
-		cout<<"************************************************************\n";
-		#endif
 		return send_result;
 	}
 #endif

@@ -1,2 +1,2 @@
-sudo g++ -std=c++14 client.cpp
+g++-5 -std=c++14 client.cpp
 ./a.out

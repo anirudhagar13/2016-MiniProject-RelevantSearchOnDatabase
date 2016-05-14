@@ -27,8 +27,7 @@ int main()
 
 	//Workload Index Generation
 	workload w1(work_file,index_gen);
-	int num_of_queries_made = w1.get_data_file(); // 
-	cout << "@@@@@@@@@@@@@@@@@@@@@@@" << endl;
+	int num_of_queries_made = w1.get_data_file();
 	cout << "num_of_queries_made = " << num_of_queries_made << endl;
 	w1.display_workload_column_index();
 	cout<<"***************************WORKLOAD INDEXING DONE****************************\n";

@@ -189,6 +189,7 @@ class Index
 		int col = 1;
 		for(auto e : col_data)
 		{
+			transform(e.begin(), e.end(), e.begin(), ::toupper);						//********************************
 			insert_in_map(col,e,tid,col_index);
 			col++;
 		}
@@ -202,6 +203,9 @@ class Index
 		//Adding new entry or if exists adding tuples to it
 		for(auto word : cell_data)
 		{
+
+			transform(word.begin(), word.end(), word.begin(), ::toupper);						//********************************
+			
 			if(cell_index.find(word) != cell_index.end())
 				cell_index[word].push_back(tid);
 			else

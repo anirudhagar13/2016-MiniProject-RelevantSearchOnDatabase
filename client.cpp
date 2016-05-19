@@ -9,10 +9,10 @@ void add_to_workload(string,string);
 
 int main()
 {
-	string data_file = "data_files/Sacramentorealestate.csv";
+	string data_file = "data_files/lamb3.csv";
 	//data_files/lamb3.csv
 	//data_files/Sacramentorealestate.csv
-	string work_file = "data_files/Sacramentorealestate_workload.csv";
+	string work_file = "data_files/work2.csv";
 	//data_files/work2.csv
 	//data_files/Sacramentorealestate_workload.csv
     string total_tuples = "";

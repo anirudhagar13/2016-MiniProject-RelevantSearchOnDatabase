@@ -9,12 +9,12 @@ void add_to_workload(string,string);
 
 int main()
 {
-	string data_file = "data_files/lamb3.csv";
-	//data_files/lamb3.csv
-	//data_files/Sacramentorealestate.csv
-	string work_file = "data_files/work2.csv";
-	//data_files/work2.csv
-	//data_files/Sacramentorealestate_workload.csv
+	string filename;
+	cout <<"Enter filename to be searched:\n";
+	getline(cin,filename);
+
+	string data_file = "data_files/" + filename;
+	string work_file = "data_files/Workload_" + filename;
     string total_tuples = "";
 
 	//DB Index Generation
@@ -28,7 +28,7 @@ int main()
 	//Workload Index Generation
 	workload w1(work_file,index_gen);
 	int num_of_queries_made = w1.get_data_file();
-	cout << "num_of_queries_made = " << num_of_queries_made << endl;
+	cout << "num_of_queries_made by previous users = " << num_of_queries_made << endl;
 	w1.display_workload_column_index();
 	cout<<"***************************WORKLOAD INDEXING DONE****************************\n";
 
@@ -53,11 +53,12 @@ int main()
 
 	while(true)
 	{
-		//t = clock();
-		//cout <<"Enter query to proceed `exit` to Quit Search\n";
-		//getline(cin,query);
+		cout <<"Enter query to proceed `exit` to Quit Search\n";
+		getline(cin,query);
 
-		//Connecting with named pipe for cgi based UI
+		//UI Code starts here
+		
+		/*//Connecting with named pipe for cgi based UI
 		while(test < 1)
         {
             fd = open(myfifo, O_RDONLY);
@@ -66,10 +67,12 @@ int main()
             close(fd);
         }
         string query(buf);
-        test = -1;
+        test = -1;*/
 
         //UI Code ends here
+
         cout<<"RECEIVED = "<<query<<endl;
+
 		//start timer		
 		t = clock();
 		if(query == "exit" || query == "exit@")
@@ -78,7 +81,7 @@ int main()
 		}
 		else
 		{
-            bool set_var_addwork = false;
+            bool set_var_addwork = true;
             set_var_addwork = process_query(query,set_var_addwork);
 
             cout<<"After Processing = "<<query<<endl;
@@ -129,13 +132,17 @@ int main()
         strcpy(sent_res, sent_result.c_str());
         sent_res[sent_result.size()] = '\0';
 
+        //UI Code starts here
+
         /* writing results back */
-        fd = open(myfifo,O_RDWR);
+        /*fd = open(myfifo,O_RDWR);
         if(write(fd, sent_res, sent_result.size()+1)<0)
             perror("Unable to write in pipe");
 
-        close(fd);
+        close(fd);*/
         //results sent back
+        
+        ////UI Code ends here
 
         cout << "####### TUPLES SENT ##########\n\n";
         cout<<sent_result;

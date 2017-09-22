@@ -1,4 +1,4 @@
-dRELEVANT SEARCHES ON STRUCTURED DATA
+SEARCH ENGINE FOR STRUCTURED DATA
 ====================================
 
 Provide fast, relevant results to your queries on structured data.
